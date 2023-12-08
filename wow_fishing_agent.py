@@ -17,8 +17,8 @@ class FishingAgent:
     def __init__(self):
         self.exitPlease = False
         self.wincap = WindowCapture()
-        self.bobber_eye = Vision('bobber_eye.jpg')
-        self.feather_pretty_far = Vision('feathers_both_1080_prettyfar.jpg') #0.78 and >4s works medium at far and at night 
+        self.bobber_eye = Vision('./Assets/bobber_eye.jpg')
+        self.feather_pretty_far = Vision('./Assets/feathers_both_1080_prettyfar.jpg') #0.78 and >4s works medium at far and at night 
         self.starting_position = False
         self.weight = 0.7
         self.starting_time = 0
