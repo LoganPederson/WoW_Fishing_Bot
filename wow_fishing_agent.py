@@ -23,7 +23,7 @@ class FishingAgent:
         self.west_fall_far = Vision('./Assets/WestFall_Far_1080.jpg')
         self.west_fall_medium = Vision('./Assets/WestFall_Medium_Real_1080.jpg')
         self.west_fall_close = Vision('./Assets/WestFall_Close_1080.jpg')
-        self.feather_weight = 0.815
+        self.feather_weight = 0.82
         self.starting_position = False
         self.weight = 0.7
         self.starting_time = 0
@@ -38,14 +38,13 @@ class FishingAgent:
         sleep(1)
         print('Recasting!')
         pyautogui.hotkey('shift', '9')
-        sleep(4) # this prevents  self.starting_position from being set to an image of the bobber halfway being cast
 
     def moveCursorToTrackingPoint(self, tracking_point_clickpoints):
         clickpoint = tracking_point_clickpoints[0]
         random_mouse_move_duration = random.uniform(0.01,0.02)
         pyautogui.moveTo(clickpoint[0],clickpoint[1],duration=random_mouse_move_duration)
         random_sleep_time = random.uniform(0.01,0.2)
-        random_sleep_time2 = random.uniform(1,2)
+        random_sleep_time2 = random.uniform(0.4,1.4)
         sleep(random_sleep_time)
         pyautogui.rightClick() # cursor should be here already as we just moved above
         sleep(random_sleep_time)
@@ -113,10 +112,10 @@ class FishingAgent:
         else:
             print('No west_fall_medium found.')
         #
-        #look for WestFall Medium
+        #look for WestFall Far
         #
         screenshot = self.wincap.get_screenshot()
-        toFindWestfallFar = self.west_fall_far.find(screenshot, self.feather_weight, 'points')
+        toFindWestfallFar = self.west_fall_far.find(screenshot, (self.feather_weight + 0.3), 'points')
         print('toFindWestfallFar ='+str(toFindWestfallFar))
         if toFindWestfallFar.any():
             print('found BobberEye - setting self.starting_position')
@@ -230,7 +229,7 @@ class FishingAgent:
             print('it equals: '+str(self.starting_position[1] - clickpoint_y))
             print('self.tracking == '+self.tracking)
             if (self.starting_position[1] - clickpoint_y > 4 and self.starting_position[1] - clickpoint_y < 15) or (self.starting_position[1] - clickpoint_y < -4 and self.starting_position[1] - clickpoint_y > -15):
-                print('feather moved more than 5 but less tahn 15 pixels on y axis')
+                print('feather moved more than 4 but less tahn 15 pixels on y axis')
                 self.moveCursorToTrackingPoint(tracking_point_clickpoints)
                 random_sleep_time = random.uniform(1,2)
                 sleep(random_sleep_time)
