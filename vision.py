@@ -63,7 +63,7 @@ class Vision:
             return np.array([], dtype=np.int32).reshape(0, 4)
 
         # create the list of [x, y, w, h] rectangles
-        print(locations)
+        #print(locations)
         rectangles = []
         for loc in locations:
             #print('found')
@@ -77,7 +77,7 @@ class Vision:
         # in the result. I've set eps to 0.5, which is:
         # "Relative difference between sides of the rectangles to merge them into a group."
         rectangles, weights = cv.groupRectangles(rectangles, groupThreshold=1, eps=0.5)
-        print(rectangles)
+        #print(rectangles)
 
         #cv.imshow('haystack', haystack_img)
         
