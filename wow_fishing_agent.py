@@ -103,7 +103,7 @@ class FishingAgent:
         #
         screenshot = self.wincap.get_screenshot()
         toFindWestfallmedium = self.west_fall_medium.find(screenshot, self.feather_weight, 'points')
-        self.log_message('toFindWestfallClose ='+str(toFindWestfallmedium))
+        #self.log_message('toFindWestfallClose ='+str(toFindWestfallmedium))
         if toFindWestfallmedium.any():
             self.log_message('found BobberEye - setting self.starting_position')
             Westfall_clickpoints = self.west_fall_medium.get_click_points(toFindWestfallmedium)
@@ -111,7 +111,7 @@ class FishingAgent:
             clickpoint_x = clickpoint[0]
             clickpoint_y = clickpoint[1]  # Assuming you want the last point
             self.starting_position = [clickpoint_x, clickpoint_y]
-            self.log_message('self.starting_position is set to:', self.starting_position)
+            #self.log_message('self.starting_position is set to:', self.starting_position)
             self.starting_time = time()
             self.tracking = 'westfall medium'
             return
@@ -122,7 +122,7 @@ class FishingAgent:
         #
         screenshot = self.wincap.get_screenshot()
         toFindWestfallFar = self.west_fall_far.find(screenshot, (self.feather_weight + 0.3), 'points')
-        self.log_message('toFindWestfallFar ='+str(toFindWestfallFar))
+        #self.log_message('toFindWestfallFar ='+str(toFindWestfallFar))
         if toFindWestfallFar.any():
             self.log_message('found BobberEye - setting self.starting_position')
             Westfall_clickpoints = self.west_fall_far.get_click_points(toFindWestfallFar)
@@ -130,7 +130,7 @@ class FishingAgent:
             clickpoint_x = clickpoint[0]
             clickpoint_y = clickpoint[1]  # Assuming you want the last point
             self.starting_position = [clickpoint_x, clickpoint_y]
-            self.log_message('self.starting_position is set to:', self.starting_position)
+            #self.log_message('self.starting_position is set to:', self.starting_position)
             self.starting_time = time()
             self.tracking = 'westfall far'
             return
@@ -234,8 +234,8 @@ class FishingAgent:
             self.log_message('self.starting_position[1]-clickpoint+y = '+str(self.starting_position[1] - clickpoint_y))
             self.log_message('it equals: '+str(self.starting_position[1] - clickpoint_y))
             self.log_message('self.tracking == '+self.tracking)
-            if (self.starting_position[1] - clickpoint_y > 4 and self.starting_position[1] - clickpoint_y < 15) or (self.starting_position[1] - clickpoint_y < -4 and self.starting_position[1] - clickpoint_y > -15):
-                self.log_message('feather moved more than 4 but less tahn 15 pixels on y axis')
+            if (self.starting_position[1] - clickpoint_y > 4 and self.starting_position[1] - clickpoint_y < 20) or (self.starting_position[1] - clickpoint_y < -4 and self.starting_position[1] - clickpoint_y > -20):
+                self.log_message('feather moved more than 4 but less than 20 pixels on y axis')
                 self.moveCursorToTrackingPoint(tracking_point_clickpoints)
                 random_sleep_time = random.uniform(1,2)
                 sleep(random_sleep_time)
@@ -249,6 +249,7 @@ class FishingAgent:
     def main(self):
         self.starting_time = time()
         sleep(2)#allows time to cast if started before casted out, preventing early detection of image as recast() is not called
+        self.recast()
         while(self.exitPlease == False):
             if (self.starting_position == False):
                 self.getStartingPosition()

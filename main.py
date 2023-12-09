@@ -34,7 +34,7 @@ def runFishingBot_background():
 
 def process_queue():
     try:
-        while True:
+        while True():
             # Non-blocking check of message queue
             message = msg_queue.get_nowait()
             custom_print(message)
