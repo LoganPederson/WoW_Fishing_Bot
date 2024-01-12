@@ -31,10 +31,9 @@ def runFishingBot_background():
     global fishing_process
     fishing_process = mp.Process(target=runFishingBot, args=(msg_queue,))
     fishing_process.start()
-
 def process_queue():
     try:
-        while True():
+        while True:
             # Non-blocking check of message queue
             message = msg_queue.get_nowait()
             custom_print(message)

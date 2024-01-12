@@ -19,12 +19,12 @@ class FishingAgent:
         self.exitPlease = False
         self.wincap = WindowCapture()
         #self.bobber_eye = Vision('./Assets/bobber_eye.jpg')
-        #self.feather_pretty_far = Vision('./Assets/Westfall_Feathers_Dark_Medium_Towards_Sand_1080.jpg') #0.78 and >4s works medium at far and at night 
+        self.feather_pretty_far = Vision('./Assets/feathers_both_1080_prettyfar.jpg') #0.78 and >4s works medium at far and at night 
         #self.west_fall_feather = Vision('./Assets/bobber_eye.jpg')
-        self.west_fall_far = Vision('./Assets/WestFall_Far_1080.jpg')
-        self.west_fall_medium = Vision('./Assets/WestFall_Medium_Real_1080.jpg')
-        self.west_fall_close = Vision('./Assets/WestFall_Close_1080.jpg')
-        self.feather_weight = 0.82
+        #self.west_fall_far = Vision('./Assets/WestFall_Far_1080.jpg')
+        #self.west_fall_medium = Vision('./Assets/WestFall_Medium_Real_1080.jpg')
+        #self.west_fall_close = Vision('./Assets/WestFall_Close_1080.jpg')
+        self.feather_weight = 0.78
         self.starting_position = False
         self.weight = 0.7
         self.starting_time = 0
@@ -36,6 +36,7 @@ class FishingAgent:
         # Put the message onto the queue
         if self.msg_queue:
             self.msg_queue.put(message)
+        pass
 
     def recast(self):
         #Recast!
@@ -66,7 +67,7 @@ class FishingAgent:
         self.starting_time=time()
                 
     def getStartingPosition(self):
-        random_time_3 = random.uniform(3,4)
+        random_time_3 = random.uniform(1,2)
         #recast after no action
         if time() - self.starting_time > random_time_3:
             self.recast()
@@ -82,60 +83,60 @@ class FishingAgent:
         #
         #look for WestFall Close
         #
-        screenshot = self.wincap.get_screenshot()
-        toFindWestfallClose = self.west_fall_close.find(screenshot, .81, 'points')
-        self.log_message('toFindWestfallClose ='+str(toFindWestfallClose))
-        if toFindWestfallClose.any():
-            self.log_message('found BobberEye - setting self.starting_position')
-            Westfall_clickpoints = self.west_fall_close.get_click_points(toFindWestfallClose)
-            clickpoint = Westfall_clickpoints[0]
-            clickpoint_x = clickpoint[0]
-            clickpoint_y = clickpoint[1]  # Assuming you want the last point
-            self.starting_position = [clickpoint_x, clickpoint_y]
-            self.log_message('self.starting_position is set to:', self.starting_position)
-            self.starting_time = time()
-            self.tracking = 'westfall close'
-            return
-        else:
-            self.log_message('No west_fall_close found.')
-        #
-        #look for WestFall Medium
-        #
-        screenshot = self.wincap.get_screenshot()
-        toFindWestfallmedium = self.west_fall_medium.find(screenshot, self.feather_weight, 'points')
-        #self.log_message('toFindWestfallClose ='+str(toFindWestfallmedium))
-        if toFindWestfallmedium.any():
-            self.log_message('found BobberEye - setting self.starting_position')
-            Westfall_clickpoints = self.west_fall_medium.get_click_points(toFindWestfallmedium)
-            clickpoint = Westfall_clickpoints[0]
-            clickpoint_x = clickpoint[0]
-            clickpoint_y = clickpoint[1]  # Assuming you want the last point
-            self.starting_position = [clickpoint_x, clickpoint_y]
-            #self.log_message('self.starting_position is set to:', self.starting_position)
-            self.starting_time = time()
-            self.tracking = 'westfall medium'
-            return
-        else:
-            self.log_message('No west_fall_medium found.')
+        # screenshot = self.wincap.get_screenshot()
+        # toFindWestfallClose = self.west_fall_close.find(screenshot, .88, 'points')
+        # self.log_message('toFindWestfallClose ='+str(toFindWestfallClose))
+        # if toFindWestfallClose.any():
+        #     self.log_message('found BobberEye - setting self.starting_position')
+        #     Westfall_clickpoints = self.west_fall_close.get_click_points(toFindWestfallClose)
+        #     clickpoint = Westfall_clickpoints[0]
+        #     clickpoint_x = clickpoint[0]
+        #     clickpoint_y = clickpoint[1]  # Assuming you want the last point
+        #     self.starting_position = [clickpoint_x, clickpoint_y]
+        #     #self.log_message('self.starting_position is set to:'+str(self.starting_position_)
+        #     self.starting_time = time()
+        #     self.tracking = 'westfall close'
+        #     return
+        # else:
+        #     self.log_message('No west_fall_close found.')
+        # #
+        # #look for WestFall Medium
+        # #
+        # screenshot = self.wincap.get_screenshot()
+        # toFindWestfallmedium = self.west_fall_medium.find(screenshot, self.feather_weight, 'points')
+        # #self.log_message('toFindWestfallClose ='+str(toFindWestfallmedium))
+        # if toFindWestfallmedium.any():
+        #     self.log_message('found BobberEye - setting self.starting_position')
+        #     Westfall_clickpoints = self.west_fall_medium.get_click_points(toFindWestfallmedium)
+        #     clickpoint = Westfall_clickpoints[0]
+        #     clickpoint_x = clickpoint[0]
+        #     clickpoint_y = clickpoint[1]  # Assuming you want the last point
+        #     self.starting_position = [clickpoint_x, clickpoint_y]
+        #     #self.log_message('self.starting_position is set to:', self.starting_position)
+        #     self.starting_time = time()
+        #     self.tracking = 'westfall medium'
+        #     return
+        # else:
+        #     self.log_message('No west_fall_medium found.')
         #
         #look for WestFall Far
         #
-        screenshot = self.wincap.get_screenshot()
-        toFindWestfallFar = self.west_fall_far.find(screenshot, (self.feather_weight + 0.3), 'points')
-        #self.log_message('toFindWestfallFar ='+str(toFindWestfallFar))
-        if toFindWestfallFar.any():
-            self.log_message('found BobberEye - setting self.starting_position')
-            Westfall_clickpoints = self.west_fall_far.get_click_points(toFindWestfallFar)
-            clickpoint = Westfall_clickpoints[0]
-            clickpoint_x = clickpoint[0]
-            clickpoint_y = clickpoint[1]  # Assuming you want the last point
-            self.starting_position = [clickpoint_x, clickpoint_y]
-            #self.log_message('self.starting_position is set to:', self.starting_position)
-            self.starting_time = time()
-            self.tracking = 'westfall far'
-            return
-        else:
-            self.log_message('No west_fall_Far found.')
+        # screenshot = self.wincap.get_screenshot()
+        # toFindWestfallFar = self.west_fall_far.find(screenshot, (self.feather_weight + 0.3), 'points')
+        # #self.log_message('toFindWestfallFar ='+str(toFindWestfallFar))
+        # if toFindWestfallFar.any():
+        #     self.log_message('found BobberEye - setting self.starting_position')
+        #     Westfall_clickpoints = self.west_fall_far.get_click_points(toFindWestfallFar)
+        #     clickpoint = Westfall_clickpoints[0]
+        #     clickpoint_x = clickpoint[0]
+        #     clickpoint_y = clickpoint[1]  # Assuming you want the last point
+        #     self.starting_position = [clickpoint_x, clickpoint_y]
+        #     #self.log_message('self.starting_position is set to:', self.starting_position)
+        #     self.starting_time = time()
+        #     self.tracking = 'westfall far'
+        #     return
+        # else:
+        #     self.log_message('No west_fall_Far found.')
 
         # #
         # #look for Westfall Feather
@@ -156,24 +157,24 @@ class FishingAgent:
         # else:
         #     self.log_message('no Westfall feather Found')
 
-        # #
-        # #look for Feather
-        # #
-        # screenshot = self.wincap.get_screenshot()
-        # toFindFeather = self.feather_pretty_far.find(screenshot, self.feather_weight, 'points') #.79 works well for feathers pretty far
-        # if toFindFeather.any():
-        #     self.log_message('found normal feathers')
-        #     feather_clickpoints = self.feather_pretty_far.get_click_points(toFindFeather)
-        #     clickpoint = feather_clickpoints[0]
-        #     clickpoint_x = clickpoint[0]
-        #     clickpoint_y = clickpoint[1]  # Assuming you want the last point
-        #     self.starting_position = [clickpoint_x, clickpoint_y]
-        #     self.log_message('self.starting_position is set to:', self.starting_position)
-        #     self.starting_time = time()
-        #     self.tracking = 'feathers far'
-        #     return
-        # else:
-        #     self.log_message('no normal feather found')
+        #
+        #look for Feather
+        #
+        screenshot = self.wincap.get_screenshot()
+        toFindFeather = self.feather_pretty_far.find(screenshot, self.feather_weight, 'points') #.79 works well for feathers pretty far
+        if toFindFeather.any():
+            self.log_message('found far feathers')
+            feather_clickpoints = self.feather_pretty_far.get_click_points(toFindFeather)
+            clickpoint = feather_clickpoints[0]
+            clickpoint_x = clickpoint[0]
+            clickpoint_y = clickpoint[1]  # Assuming you want the last point
+            self.starting_position = [clickpoint_x, clickpoint_y]
+            #self.log_message('self.starting_position is set to:', self.starting_position)
+            self.starting_time = time()
+            self.tracking = 'feathers far'
+            return
+        else:
+            self.log_message('no far feather found')
         
         # #
         # #look for Bobber Eye
@@ -224,8 +225,8 @@ class FishingAgent:
         elif self.tracking == 'feathers far':
             tracking_point = self.feather_pretty_far
 
-        screenshot = self.wincap.get_screenshot()
-        toFind = tracking_point.find(screenshot, self.feather_weight, 'points')
+        screenshot = self.wincap.get_screenshot() 
+        toFind = tracking_point.find(screenshot, self.feather_weight, 'points') #adjust weight here
         if toFind.any():
             tracking_point_clickpoints = tracking_point.get_click_points(toFind)
             clickpoint = tracking_point_clickpoints[0]
@@ -234,7 +235,7 @@ class FishingAgent:
             self.log_message('self.starting_position[1]-clickpoint+y = '+str(self.starting_position[1] - clickpoint_y))
             self.log_message('it equals: '+str(self.starting_position[1] - clickpoint_y))
             self.log_message('self.tracking == '+self.tracking)
-            if (self.starting_position[1] - clickpoint_y > 4 and self.starting_position[1] - clickpoint_y < 20) or (self.starting_position[1] - clickpoint_y < -4 and self.starting_position[1] - clickpoint_y > -20):
+            if (self.starting_position[1] - clickpoint_y > 5 and self.starting_position[1] - clickpoint_y < 20) or (self.starting_position[1] - clickpoint_y < -5 and self.starting_position[1] - clickpoint_y > -20):
                 self.log_message('feather moved more than 4 but less than 20 pixels on y axis')
                 self.moveCursorToTrackingPoint(tracking_point_clickpoints)
                 random_sleep_time = random.uniform(1,2)
@@ -250,9 +251,20 @@ class FishingAgent:
         self.starting_time = time()
         sleep(2)#allows time to cast if started before casted out, preventing early detection of image as recast() is not called
         self.recast()
+        last_jump_time = time()
         while(self.exitPlease == False):
+            loop_start_time = time()
+            # Check if 10 minutes have passed since the last jump
+            if loop_start_time - last_jump_time >= 600:
+                pyautogui.press('space')  # Simulate spacebar press
+                last_jump_time = loop_start_time  # Update the last jump time
+
             if (self.starting_position == False):
                 self.getStartingPosition()
             else:
                 self.watchForMovement()
+
+            loop_end_time = time()  # Record the end time of the loop
+            loop_duration = loop_end_time - loop_start_time  # Calculate the duration
+            print(f"Loop Duration: {loop_duration:.4f} seconds")  # Print the duration
             

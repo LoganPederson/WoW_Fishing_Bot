@@ -86,6 +86,7 @@ class Vision:
         fileName = "./Detections/latest_detection.jpg"
         finished_img = self.draw_rectangles(haystack_img,rectangles)
         cv.imwrite(fileName, haystack_img)
+        #cv.imwrite(fileName_with_timestamp, haystack_img)
 
         return rectangles
 
